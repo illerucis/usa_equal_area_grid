@@ -6,7 +6,9 @@ class EqualAreaGlobeGrid(object):
     All calculations here are provided by the National Snow and Ice Data Center (NSIDC)
 
     Specifically, this is using the Equal-Area Scalable Earth Grid (EASE) Global Cylindrical Equal-Area Projection,
-    described in detail here: http://nsidc.org/data/ease/ease_grid.html.
+    described in detail here: http://nsidc.org/data/ease/ease_grid.html. The EASE grid for this projection is 
+    defined with 625 km^2 cells, translating to a 1382x585 resolution for the entire globe. The grid is centered
+    at 0.0 degrees longitude, 0.0 degrees latitude.
 
     The two main formulas are:
 
@@ -18,8 +20,8 @@ class EqualAreaGlobeGrid(object):
               lambda = radians(longitude)
               phi = radians(latitude)
               R = radius of the earth in kilometers
-              r0 = map origin column (determined by your starting longitude)
-              s0 = map origin row (determined by your starting latitude)
+              r0 = map origin column (corresponds to 0.0 degrees longitude)
+              s0 = map origin row  (corresponds to 0.0 degrees latitude)
               C = nominal cell size
 
         (see http://nsidc.org/data/ease/ease_grid.html#GridSection for more information)
@@ -41,10 +43,10 @@ class EqualAreaGlobeGrid(object):
 
         self._grid_scale = self._reference_scale_km / self._cell_size_km
 
-        # r0 defines 0.0 degrees longitude (http://nsidc.org/data/ease/ease_grid.html#GridSection)
+        # r0 corresponds to 0.0 degrees longitude 
         self._r0 = 691.0 * self._grid_scale
 
-        # s0 defines 0.0 degrees latitude (http://nsidc.org/data/ease/ease_grid.html#GridSection)
+        # s0 corresponds to 0.0 degrees latitude
         self._s0 = 292.5 * self._grid_scale
 
         # rg provides a scale factor to transform the grid to different cell sizes
