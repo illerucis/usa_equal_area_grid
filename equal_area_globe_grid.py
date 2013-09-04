@@ -26,9 +26,8 @@ class EqualAreaGlobeGrid(object):
 
         (see http://nsidc.org/data/ease/ease_grid.html#GridSection for more information)
 
-    Adaptations were made to generate a grid of any cell size by multiplying
-    each equation's RHS by the factor (C / cell_size); a cell size 0.5*C km would double
-    the resolution, 0.25*C km would quadruple, etc.
+    Adaptations were made to generate a grid of any cell size by multiplying each equation's RHS by the 
+    factor (C / cell_size); a cell size 0.5*C km would double the resolution, 0.25*C km would quadruple, etc.
 
     For an implementation in C, see ftp://sidads.colorado.edu/pub/tools/easegrid/geolocation_tools/ezlhconv.c
 
