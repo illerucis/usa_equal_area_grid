@@ -10,3 +10,5 @@ Usage:
 Output:
 
     /beautiful_grid.kml
+
+The output is readily viewable in either Google Maps or Google Earth

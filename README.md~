@@ -1,11 +1,5 @@
-The main file is grid_generator.py
-
-Dependencies:
-
-    /geography_helper.py
-    /equal_area_globe_grid.py
-    /united_states_border.json
-
+Generating the grid depends on Shapely (https://pypi.python.org/pypi/Shapely)
+     
 Usage:
 
     Let X be the desired area in square miles of each equal area cell
