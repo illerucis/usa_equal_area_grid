@@ -5,7 +5,7 @@ class EqualAreaGlobeGrid(object):
     """
     All calculations here are provided by the National Snow and Ice Data Center (NSIDC)
 
-    Specifically, I am using the Equal-Area Scalable Earth Grid (EASE) Global Cylindrical Equal-Area Projection,
+    Specifically, this is using the Equal-Area Scalable Earth Grid (EASE) Global Cylindrical Equal-Area Projection,
     described in detail here: http://nsidc.org/data/ease/ease_grid.html.
 
     The two main formulas are:

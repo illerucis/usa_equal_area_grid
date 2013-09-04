@@ -4,6 +4,7 @@ from equal_area_globe_grid import EqualAreaGlobeGrid
 from geography_helper import USABoundsReference
 from shapely.geometry.polygon import Polygon
 import json
+import sys
 
 class GridGenerator(object):
     """
@@ -39,8 +40,8 @@ class GridGenerator(object):
         # we'll store each cell's shape array here
         self._shape_arrays = []
 
-        # a calculator that converts grid (row, column) to (longitude, latitude) and vice versa.
-        # see class doc-string for citations and more info
+        # a calculator that converts grid (column, row) to (longitude, latitude) and vice versa.
+        # formulas used are provided by the National Snow and Ice Data Center (see class doc-string for more info)
         self._proj_calc = EqualAreaGlobeGrid(self._cell_size_miles)
 
 
@@ -85,19 +86,23 @@ class GridGenerator(object):
             region_most_west_longitude = self._geo_reference[region]["west"]
             region_most_north_latitude = self._geo_reference[region]["north"]
 
-            # get the starting NSIDC EASE row-column coordinate pair
+            # get the starting grid column-row coordinate pair
             self._r_0, self._s_0 = self._proj_calc.get_grid_coordinates(region_most_west_longitude, region_most_north_latitude)
 
             start_longitude, start_latitude = self._proj_calc.get_longitude_latitude(self._r_0, self._s_0)
 
             # just renaming to keep the crawl semantically consistent
             latitude_crawl = start_latitude
+            
+            # row index relative to s_0
+            s = 0
 
-            j = 0
             # crawl southward
             while latitude_crawl > self._geo_reference[region]["south"]:
+                
+                # column index relative to r_0
+                r = 0
 
-                i = 0
                 # reset the starting longitude (western-most of the region on the grid)
                 longitude_crawl = start_longitude
 
@@ -105,25 +110,25 @@ class GridGenerator(object):
                 while longitude_crawl < self._geo_reference[region]["east"]:
 
                     # generate a cell, and return the new starting longitude and latitude
-                    longitude_crawl, latitude_crawl = self._generate_individual_cell(i, j)
+                    longitude_crawl, latitude_crawl = self._generate_individual_cell(r, s)
 
-                    i += 1
-                j += 1
+                    r += 1
+                s += 1
 
 
-    def _generate_individual_cell(self, i, j):
+    def _generate_individual_cell(self, r, s):
 
         # northwest corner
-        longitude_0, latitude_0 = self._proj_calc.get_longitude_latitude(self._r_0 + i, self._s_0 + j)
+        longitude_0, latitude_0 = self._proj_calc.get_longitude_latitude(self._r_0 + r, self._s_0 + s)
 
         # northeast corner
-        longitude_1, latitude_1 = self._proj_calc.get_longitude_latitude(self._r_0 + i + 1, self._s_0 + j)
+        longitude_1, latitude_1 = self._proj_calc.get_longitude_latitude(self._r_0 + r + 1, self._s_0 + s)
 
         # southeast corner
-        longitude_2, latitude_2 = self._proj_calc.get_longitude_latitude(self._r_0+ i + 1, self._s_0 + j + 1)
+        longitude_2, latitude_2 = self._proj_calc.get_longitude_latitude(self._r_0+ r + 1, self._s_0 + s + 1)
 
         # southwest corner
-        longitude_3, latitude_3 = self._proj_calc.get_longitude_latitude(self._r_0 + i, self._s_0 + j + 1)
+        longitude_3, latitude_3 = self._proj_calc.get_longitude_latitude(self._r_0 + r, self._s_0 + s + 1)
 
         shape_array = [
             [longitude_0, latitude_0],
@@ -164,8 +169,9 @@ class GridGenerator(object):
         beautiful_grid_file.close()
 
 def main():
-
-    grid_generator = GridGenerator(10)
+    
+    cell_size = int(sys.argv[1])
+    grid_generator = GridGenerator(cell_size)
     grid_generator.run()
 
 if __name__ == "__main__":
