@@ -41,7 +41,7 @@ class GridGenerator(object):
         self._shape_arrays = []
 
         # a calculator that converts grid (column, row) to (longitude, latitude) and vice versa.
-        # formulas used are provided by the National Snow and Ice Data Center (see class doc-string for more info)
+        # formulas given by the National Snow and Ice Data Center (see EqualAreaGlobeGrid doc-string for more info)
         self._proj_calc = EqualAreaGlobeGrid(self._cell_size_miles)
 
 
@@ -56,7 +56,7 @@ class GridGenerator(object):
 
     def _load_US_boundary(self):
         """
-        Loads a GEOJson multipolygon created separately by merging the polygons provided here:
+        Loads a GeoJSON multipolygon created separately by merging the polygons provided here:
             https://developers.google.com/kml/documentation/us_states.kml
         """
         geojson_multipolygon_file = open("united_states_border.json", "r")
