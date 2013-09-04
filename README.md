@@ -1,10 +1,10 @@
+This package subdivides the USA territory into an equal-area grid. Grid generation relies on formulas given by the Equal-Area Scalable Earth Grid (EASE), which was created by the National Snow and Ice Data Center (NSIDC) in 1992. This specific implementation uses the Global Cylindrical Equal-Area Projection. Please see http://nsidc.org/data/ease/ease_grid.html for more information.
+
 Generating the grid depends on Shapely (https://pypi.python.org/pypi/Shapely)
-     
+
 Usage:
 
-Let X be the desired area in square miles of each equal area cell
-
-From the command-line:
+Let X be the desired area in square miles of each equal area cell. From the command-line:
     
     $ python grid_generator.py X
     
