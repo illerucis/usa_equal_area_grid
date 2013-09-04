@@ -1,0 +1,18 @@
+The main file is grid_generator.py
+
+Dependencies:
+
+    /geography_helper.py
+    /equal_area_globe_grid.py
+    /united_states_border.json
+
+Usage:
+
+    Let X be the desired area in square miles of each equal area cell
+    
+    >> from grid_generator import GridGenerator
+    >> GridGenerator(sqrt(X)).run()
+
+Output:
+
+    /beautiful_grid.kml
