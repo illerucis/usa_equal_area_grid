@@ -4,14 +4,14 @@ Generating the grid depends on Shapely (https://pypi.python.org/pypi/Shapely)
 
 Usage:
 
-Let X be the desired area in square miles of each equal area cell. From the command-line:
+Let X be the desired area in square miles of each equal area cell, and Y = sqrt(X). From the command-line:
     
-    $ python grid_generator.py X
+    $ python grid_generator.py Y
     
 From the interpeter:
 
     >> from grid_generator import GridGenerator
-    >> GridGenerator(sqrt(X)).run()
+    >> GridGenerator(Y).run()
 
 Output:
 
